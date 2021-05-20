@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Faber Flight App</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Home Css -->
+<link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+    <!-- Main -->
+    <div class="container-fluid">
+        <h1 class="text-center">Order List</h1>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="nav flex-column nav-pills">
+                    <a class="nav-link " th:href="@{/}">Ticket book</a>
+                    <a class="nav-link active" th:href="@{/order}">List Order</a>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div class="row background-red">
+                    <h5>All Info Order</h5>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order Id</th>
+                                <th scope="col">Time of Order</th>
+                                <th scope="col">Return type</th>
+                                <th scope="col">Flight Id</th>
+                                <th scope="col">Departure Airport Name</th>
+                                <th scope="col">Arrival Airpor Name</th>
+                                <th scope="col">Departure Date And Time</th>
+                                <th scope="col">Arrival Date And Time</th>
+                                <th scope="col">Total Adult Senior Child</th>
+                                <th scope="col">Price per flight</th>
+                                <th scope="col">Total Price For Order</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${!orderList.isEmpty()}" th:each="dto: *{orderList}">
+                                <th scope="row" th:text="${dto.orderId}"></th>
+                                <td>
+                                    <input type="text" class="form-control" th:value="${dto.timeOfOrder}" data-toggle="tooltip" data-placement="top" th:title="${dto.timeOfOrder}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="(${dto.returnType} == 1) ? 'One-Way' : 'Round Trip'" data-toggle="tooltip" data-placement="top" th:title="(${dto.returnType} == 1) ? 'One-Way' : 'Round Trip'" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="${dto.flight.flightID}" data-toggle="tooltip" data-placement="top" th:title="${dto.flight.flightID}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="${dto.departureAirport.departureAirportName}" data-toggle="tooltip" data-placement="top" th:title="${dto.departureAirport.departureAirportName}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="${dto.arrivalAirport.arrivalAirportName}" data-toggle="tooltip" data-placement="top" th:title="${dto.arrivalAirport.arrivalAirportName}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="${dto.departureDateAndTime}" data-toggle="tooltip" data-placement="top" th:title="${dto.departureDateAndTime}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" th:value="(${dto.arrivalDateAndTime} != null) ? ${dto.arrivalDateAndTime} : ''" data-toggle="tooltip" data-placement="top" th:title="(${dto.arrivalDateAndTime} != null) ? ${dto.arrivalDateAndTime} : ''" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control totalAdultSeniorChild" th:value="${dto.totalAdultSeniorChild}" data-toggle="tooltip" data-placement="top" th:title="${dto.totalAdultSeniorChild}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control pricePerFlight" th:value="${dto.pricePerFlight}" data-toggle="tooltip" data-placement="top" th:title="${dto.pricePerFlight}" readonly="readonly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control totalPriceForOrder" th:value="${dto.totalPriceForOrder}" data-toggle="tooltip" data-placement="top" th:title="${dto.totalPriceForOrder}" readonly="readonly">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start Footer Area -->
+    <footer class="footer">
+        <div class="copyright">
+            <div class="container">
+                <div class="inner">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="left">
+                                <p>Copyright © 2021 <a href="https://www.facebook.com/TuanAnh060995/" target="_blank">Tuấn Anh Qb</a>  -  All Rights Reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /End Footer Area -->
+    <!-- JS -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <!-- Common JS -->
+    <script th:src="@{/common/common.js}"></script>
+    <!-- JS -->
+    <script th:src="@{/js/order.js}"></script>
+    <script th:inline="javascript">
+        var orderList = /*[[${orderList}]]*/[];
+    </script>
+</body>
+</html>
